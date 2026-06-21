@@ -112,9 +112,50 @@ function updateDate() {
 updateGreeting();
 updateTime();
 updateDate();
+</body>
+</html><h3>🌅 Sunrise</h3>
+<p><span id="sunrise">Loading...</span></p>
 
+<h3>🌇 Sunset</h3>
+<p><span id="sunset">Loading...</span></p>
+        );
 setInterval(updateTime, 1000);
-</script>
+</script>async function getSunTimes() {
+    try {
+        const response = await fetch(
+            "https://api.open-meteo.com/v1/forecast?latitude=38.8048&longitude=-77.0469&daily=sunrise,sunset&timezone=auto"
+        );
+
+        const data = await response.json();
+
+        const sunrise = new Date(data.daily.sunrise[0]);
+        const sunset = new Date(data.daily.sunset[0]);
+
+        document.getElementById("sunrise").textContent =
+            sunrise.toLocaleTimeString([], {
+                hour: "numeric",
+                minute: "2-digit"
+            });
+
+        document.getElementById("sunset").textContent =
+            sunset.toLocaleTimeString([], {
+                hour: "numeric",
+                minute: "2-digit"
+            });
+
+    } catch (error) {
+        document.getElementById("sunrise").textContent = "Unavailable";
+        document.getElementById("sunset").textContent = "Unavailable";
+    }
+}
+
+getSunTimes();
 
 </body>
-</html>
+</html><h3>🌅 Sunrise</h3>
+<p><span id="sunrise">Loading...</span></p>
+
+<h3>🌇 Sunset</h3>
+<p><span id="sunset">Loading...</span></p>
+        );
+
